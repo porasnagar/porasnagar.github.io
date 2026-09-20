@@ -1,0 +1,18 @@
+<!-- Minesweeper icon 32x32 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges">
+  <rect width="32" height="32" fill="#c0c0c0"/>
+  <!-- smiley face button -->
+  <rect x="5" y="5" width="22" height="22" fill="#ffcc00"/>
+  <rect x="5" y="5" width="22" height="22" fill="none" stroke="#999" stroke-width="1"/>
+  <!-- eyes -->
+  <rect x="10" y="11" width="3" height="3" fill="#333"/>
+  <rect x="19" y="11" width="3" height="3" fill="#333"/>
+  <!-- smile -->
+  <rect x="10" y="19" width="12" height="2" fill="#333"/>
+  <rect x="10" y="17" width="2" height="2" fill="#333"/>
+  <rect x="20" y="17" width="2" height="2" fill="#333"/>
+  <!-- mines -->
+  <circle cx="8" cy="28" r="2" fill="#333"/>
+  <circle cx="16" cy="28" r="2" fill="#333"/>
+  <circle cx="24" cy="28" r="2" fill="#333"/>
+</svg>

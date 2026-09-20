@@ -1,0 +1,9 @@
+<!-- Windows 98 style LinkedIn icon - 32x32 pixel art -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges">
+  <rect width="32" height="32" fill="#0a66c2"/>
+  <rect x="4" y="4" width="10" height="10" fill="white" rx="1"/>
+  <rect x="4" y="18" width="10" height="10" fill="white"/>
+  <rect x="18" y="13" width="10" height="15" fill="white"/>
+  <rect x="17" y="4" width="13" height="9" fill="white" rx="4"/>
+  <rect x="18" y="13" width="4" height="4" fill="#0a66c2"/>
+</svg>

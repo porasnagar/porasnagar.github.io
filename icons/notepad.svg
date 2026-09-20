@@ -1,0 +1,24 @@
+<!-- Notepad icon 32x32 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges">
+  <!-- page shadow -->
+  <rect x="8" y="5" width="18" height="23" fill="#808080"/>
+  <!-- page body -->
+  <rect x="6" y="3" width="18" height="23" fill="white"/>
+  <rect x="6" y="3" width="18" height="23" fill="none" stroke="#aaa" stroke-width="1"/>
+  <!-- blue line -->
+  <rect x="6" y="3" width="4" height="23" fill="#c8d8f0"/>
+  <!-- spiral binding dots -->
+  <circle cx="10" cy="7" r="1.5" fill="#808080"/>
+  <circle cx="10" cy="12" r="1.5" fill="#808080"/>
+  <circle cx="10" cy="17" r="1.5" fill="#808080"/>
+  <circle cx="10" cy="22" r="1.5" fill="#808080"/>
+  <!-- text lines -->
+  <rect x="13" y="8" width="9" height="1" fill="#999"/>
+  <rect x="13" y="11" width="8" height="1" fill="#999"/>
+  <rect x="13" y="14" width="9" height="1" fill="#999"/>
+  <rect x="13" y="17" width="7" height="1" fill="#999"/>
+  <rect x="13" y="20" width="9" height="1" fill="#999"/>
+  <!-- pencil -->
+  <rect x="21" y="22" width="3" height="8" fill="#ffcc44" transform="rotate(-30 22 26)"/>
+  <polygon points="21,29 23,29 22,32" fill="#cc8800" transform="rotate(-30 22 26)"/>
+</svg>

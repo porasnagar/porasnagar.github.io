@@ -1,0 +1,34 @@
+<!-- Space Invaders alien pixel art 32x32 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges">
+  <rect width="32" height="32" fill="#000020"/>
+  <!-- classic space invader shape -->
+  <!-- antennae -->
+  <rect x="8" y="4" width="2" height="3" fill="#00ff88"/>
+  <rect x="22" y="4" width="2" height="3" fill="#00ff88"/>
+  <!-- head -->
+  <rect x="10" y="7" width="12" height="2" fill="#00ff88"/>
+  <rect x="8" y="9" width="16" height="2" fill="#00ff88"/>
+  <!-- body row 1 - eyes -->
+  <rect x="6" y="11" width="20" height="2" fill="#00ff88"/>
+  <rect x="10" y="11" width="2" height="2" fill="#000020"/>
+  <rect x="20" y="11" width="2" height="2" fill="#000020"/>
+  <!-- body row 2 -->
+  <rect x="6" y="13" width="20" height="2" fill="#00ff88"/>
+  <!-- body row 3 - mouth -->
+  <rect x="8" y="15" width="16" height="2" fill="#00ff88"/>
+  <rect x="10" y="15" width="2" height="2" fill="#000020"/>
+  <rect x="20" y="15" width="2" height="2" fill="#000020"/>
+  <rect x="14" y="15" width="4" height="2" fill="#000020"/>
+  <!-- legs -->
+  <rect x="8" y="17" width="2" height="4" fill="#00ff88"/>
+  <rect x="14" y="17" width="4" height="4" fill="#00ff88"/>
+  <rect x="22" y="17" width="2" height="4" fill="#00ff88"/>
+  <!-- feet -->
+  <rect x="6" y="19" width="4" height="2" fill="#00ff88"/>
+  <rect x="22" y="19" width="4" height="2" fill="#00ff88"/>
+  <!-- stars -->
+  <rect x="2" y="2" width="1" height="1" fill="#ffffff"/>
+  <rect x="28" y="5" width="1" height="1" fill="#ffffff"/>
+  <rect x="4" y="26" width="1" height="1" fill="#ffffff"/>
+  <rect x="27" y="25" width="1" height="1" fill="#ffffff"/>
+</svg>
