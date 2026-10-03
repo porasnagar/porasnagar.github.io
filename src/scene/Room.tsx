@@ -333,7 +333,6 @@ const LIFT: Partial<Record<HotId, { node: string; axis: 'x' | 'y' | 'z'; amount:
   sign_about: { node: 'sign_about', axis: 'x', amount: 0.02 },
   sign_notes: { node: 'sign_notes', axis: 'x', amount: 0.02 },
   poster: { node: 'poster', axis: 'z', amount: 0.015 },
-  board: { node: 'board', axis: 'x', amount: 0.012 },
 }
 
 function useHoverLift(nodes: Record<string, THREE.Object3D>, hovered: string | null) {
