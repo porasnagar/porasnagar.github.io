@@ -2,7 +2,8 @@ import { useFrame, useThree } from '@react-three/fiber'
 import { useRef } from 'react'
 import * as THREE from 'three'
 import { useStore } from '../state/store'
-import { VIEWS } from './layout'
+import { VIEWS, VIEWS_PORTRAIT } from './layout'
+import { orbit } from './shared'
 
 export function CameraRig() {
   const camera = useThree((s) => s.camera) as THREE.PerspectiveCamera
@@ -13,9 +14,11 @@ export function CameraRig() {
   const goalPos = new THREE.Vector3()
   const goalTarget = new THREE.Vector3()
   const dir = new THREE.Vector3()
+  const up = new THREE.Vector3(0, 1, 0)
 
   useFrame((_, dt) => {
-    const v = VIEWS[view]
+    const portrait = camera.aspect < 0.8
+    const v = (portrait && VIEWS_PORTRAIT[view]) || VIEWS[view]
     goalTarget.set(...v.target)
     goalPos.set(...v.pos)
     if (v.fitW || v.fitH) {
@@ -24,13 +27,17 @@ export function CameraRig() {
       const needH = v.fitH ? v.fitH / 2 / half : 0
       const need = Math.max(needW, needH)
       dir.copy(goalPos).sub(goalTarget)
-      const d = dir.length()
-      if (need > d) goalPos.copy(goalTarget).addScaledVector(dir.normalize(), need)
+      if (need > dir.length()) goalPos.copy(goalTarget).addScaledVector(dir.normalize(), need)
     }
     if (view === 'room') {
-      goalPos.x += pointer.x * 0.35
-      goalPos.y += pointer.y * 0.2
-    } else if (view === 'hifi') {
+      dir.copy(goalPos).sub(goalTarget).applyAxisAngle(up, orbit.yaw)
+      goalPos.copy(goalTarget).add(dir)
+      goalPos.y += orbit.pitch * 4
+      if (!portrait) {
+        goalPos.x += pointer.x * 0.35
+        goalPos.y += pointer.y * 0.2
+      }
+    } else if (view === 'hifi' && !portrait) {
       goalPos.x += pointer.x * 0.06
       goalPos.y += pointer.y * 0.04
     }

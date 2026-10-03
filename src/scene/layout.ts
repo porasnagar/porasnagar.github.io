@@ -35,3 +35,10 @@ export const VIEWS: Record<View, { pos: [number, number, number]; target: [numbe
   board: { pos: [-1.2, 1.78, -1.25], target: [-3, 1.72, -1.25], fitW: 1.7 },
   window: { pos: [1.7, 1.75, -1.0], target: [WINDOW.x, WINDOW.y, -3.4], fitW: 1.7 },
 }
+
+// Phones in portrait: crop the sides and frame the hi-fi corner; drag rotates around the target.
+export const VIEWS_PORTRAIT: Partial<typeof VIEWS> = {
+  room: { pos: [6.0, 4.6, 6.6], target: [-0.9, 1.15, -1.7], fitW: 4.1 },
+  hifi: { pos: [-0.45, 1.6, -0.4], target: [-0.45, 1.3, -2.8], fitW: 2.35 },
+  board: { pos: [-1.2, 1.6, -1.25], target: [-3, 1.25, -1.25], fitW: 1.6 },
+}

@@ -1,12 +1,13 @@
 import { PerformanceMonitor } from '@react-three/drei'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { Suspense, useEffect, useState } from 'react'
+import { Suspense, useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { useStore } from '../state/store'
 import { CameraRig } from './CameraRig'
 import { Lights } from './Lights'
 import { Room } from './Room'
 import { Scenery } from './Scenery'
+import { orbit } from './shared'
 
 const Q = new URLSearchParams(location.search)
 const OFF = (k: string) => Q.get(k) === '0'
@@ -61,6 +62,7 @@ function Ready({ onReady }: { onReady: () => void }) {
 }
 
 export function Scene({ onReady }: { onReady: () => void }) {
+  const drag = useRef<{ x: number; y: number } | null>(null)
   const [dpr, setDpr] = useState(Math.min(1.5, window.devicePixelRatio))
   return (
     <Canvas
@@ -74,6 +76,16 @@ export function Scene({ onReady }: { onReady: () => void }) {
         gl.setClearColor('#17120f')
       }}
       onPointerMissed={() => useStore.getState().set({ hovered: null })}
+      onPointerDown={(e) => (drag.current = { x: e.clientX, y: e.clientY })}
+      onPointerMove={(e) => {
+        const d = drag.current
+        if (!d || e.buttons === 0 || useStore.getState().view !== 'room') return
+        orbit.yaw = THREE.MathUtils.clamp(orbit.yaw - (e.clientX - d.x) * 0.005, -0.85, 0.85)
+        orbit.pitch = THREE.MathUtils.clamp(orbit.pitch + (e.clientY - d.y) * 0.003, -0.25, 0.45)
+        drag.current = { x: e.clientX, y: e.clientY }
+      }}
+      onPointerUp={() => (drag.current = null)}
+      style={{ touchAction: 'none' }}
     >
       <PerformanceMonitor
         bounds={() => [40, 58]}

@@ -292,6 +292,7 @@ export function Room() {
     document.body.style.cursor = ''
   }
   const onClick = (e: ThreeEvent<MouseEvent>) => {
+    if (e.delta > 8) return
     const id = resolve(e.object)
     if (!id) return
     e.stopPropagation()

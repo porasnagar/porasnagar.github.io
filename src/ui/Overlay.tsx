@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { audio } from '../audio/engine'
 import { profile } from '../content/profile'
 import { recordById, records } from '../content/records'
@@ -23,6 +23,13 @@ const HINTS: Record<View, string> = {
 
 const BACK: Partial<Record<View, View>> = { hifi: 'room', screen: 'hifi', board: 'room', window: 'room' }
 
+const TABS: { view: View; label: string }[] = [
+  { view: 'room', label: 'Room' },
+  { view: 'hifi', label: 'Records' },
+  { view: 'screen', label: 'Receiver' },
+  { view: 'board', label: 'Notes' },
+]
+
 export function Overlay() {
   const view = useStore((s) => s.view)
   const hovered = useStore((s) => s.hovered)
@@ -36,6 +43,8 @@ export function Overlay() {
   const phase = useStore((s) => s.phase)
   const power = useStore((s) => s.power)
   const narrow = useMedia('(max-width: 720px)')
+  const [menuOpen, setMenuOpen] = useState(false)
+  const notes = useStore((s) => s.notes)
   useNow(20_000)
   const tip = useRef<HTMLDivElement>(null)
 
@@ -91,7 +100,12 @@ export function Overlay() {
             {profile.role} · {profile.location}
           </p>
         </div>
-        <div className="controls">
+        {narrow && (
+          <button className="menu-toggle" aria-expanded={menuOpen} onClick={() => setMenuOpen((v) => !v)}>
+            <span className="presence" data-status={status} /> Menu
+          </button>
+        )}
+        <div className="controls" data-open={!narrow || menuOpen} onClick={() => narrow && setMenuOpen(false)}>
           <span className="live" title="Local time and weather in Noida, and visitors here now">
             <span>{localClock()} IST</span>
             {weather && (
@@ -125,6 +139,23 @@ export function Overlay() {
           <button onClick={() => useStore.getState().set({ listOpen: true })}>List view</button>
         </div>
       </header>
+
+      {narrow && (
+        <nav className="tabbar" aria-label="Rooms">
+          {TABS.map((t) => (
+            <button
+              key={t.view}
+              aria-current={view === t.view ? 'page' : undefined}
+              onClick={() => {
+                audio.unlock()
+                useStore.getState().set(t.view === 'screen' ? { view: 'screen', power: true } : { view: t.view })
+              }}
+            >
+              {t.label}
+            </button>
+          ))}
+        </nav>
+      )}
 
       <footer className="bottom">
         <AnimatePresence>
@@ -167,6 +198,20 @@ export function Overlay() {
           >
             <h2>Leave a note</h2>
             <NoteForm />
+            {narrow && (
+              <ol className="sheet-notes">
+                {notes
+                  .slice(-12)
+                  .reverse()
+                  .map((n) => (
+                    <li key={n.id}>
+                      <p>{n.text}</p>
+                      <span>— {n.name}</span>
+                    </li>
+                  ))}
+                {notes.length === 0 && <li className="empty">No notes yet. Be the first.</li>}
+              </ol>
+            )}
           </motion.div>
         )}
       </AnimatePresence>

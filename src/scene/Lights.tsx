@@ -6,6 +6,7 @@ import { damp } from './interact'
 import { WINDOW } from './layout'
 import { useDaylight } from './useDaylight'
 
+const COARSE = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches
 const DAY_BG = new THREE.Color('#d8c9b5')
 const NIGHT_BG = new THREE.Color('#17120f')
 const SUN_HIGH = new THREE.Color('#fff1dc')
@@ -58,7 +59,7 @@ export function Lights() {
         ref={sun}
         position={[WINDOW.x + 2.2, 4.6, -8]}
         castShadow
-        shadow-mapSize={[2048, 2048]}
+        shadow-mapSize={COARSE ? [1024, 1024] : [2048, 2048]}
         shadow-bias={-0.0004}
         shadow-normalBias={0.02}
         shadow-camera-left={-5}

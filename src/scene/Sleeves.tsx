@@ -50,6 +50,7 @@ function Sleeve({ index }: { index: number }) {
   }
   const click = (e: ThreeEvent<MouseEvent>) => {
     e.stopPropagation()
+    if (e.delta > 8) return
     audio.unlock()
     const s = useStore.getState()
     if (s.view === 'room' || s.view === 'board' || s.view === 'window') s.setView('hifi')
