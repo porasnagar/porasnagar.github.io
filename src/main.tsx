@@ -9,10 +9,11 @@ import './styles.css'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App'
+import { hover, orbit } from './scene/shared'
 import * as deck from './state/deck'
 import { useStore } from './state/store'
 
-if (import.meta.env.DEV) Object.assign(window, { __store: useStore, __deck: deck })
+if (import.meta.env.DEV) Object.assign(window, { __store: useStore, __deck: deck, __orbit: orbit, __hover: hover })
 
 const fontsReady = Promise.all([
   document.fonts.load('900 64px Archivo'),

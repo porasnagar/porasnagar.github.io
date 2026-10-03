@@ -7,10 +7,41 @@ import { CameraRig } from './CameraRig'
 import { Lights } from './Lights'
 import { Room } from './Room'
 import { Scenery } from './Scenery'
-import { orbit } from './shared'
+import { hover, orbit } from './shared'
 
 const Q = new URLSearchParams(location.search)
 const OFF = (k: string) => Q.get(k) === '0'
+const calm = window.matchMedia('(prefers-reduced-motion: reduce)')
+
+// Two-finger swipes turn the room, pinch (ctrl+wheel in browsers) and the mouse wheel zoom.
+// A mouse wheel arrives as large vertical-only steps; a trackpad as small or diagonal deltas.
+function WheelOrbit() {
+  const gl = useThree((s) => s.gl)
+  useEffect(() => {
+    const el = gl.domElement
+    let padUntil = 0
+    const zoom = (f: number) => (orbit.zoom = THREE.MathUtils.clamp(orbit.zoom * f, 0.6, 1.15))
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault()
+      if (useStore.getState().view !== 'room') return
+      const px = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? 400 : 1
+      const dx = e.deltaX * px
+      const dy = e.deltaY * px
+      if (e.ctrlKey) return zoom(Math.exp(THREE.MathUtils.clamp(dy, -40, 40) * 0.004))
+      const now = performance.now()
+      if (e.deltaMode === 0 && (dx !== 0 || Math.abs(dy) < 50 || now < padUntil)) {
+        padUntil = now + 400
+        orbit.yaw = THREE.MathUtils.clamp(orbit.yaw + dx * 0.0015, -0.85, 0.85)
+        orbit.pitch = THREE.MathUtils.clamp(orbit.pitch + dy * 0.001, -0.25, 0.45)
+        return
+      }
+      zoom(Math.exp(THREE.MathUtils.clamp(dy, -200, 200) * 0.0012))
+    }
+    el.addEventListener('wheel', onWheel, { passive: false })
+    return () => el.removeEventListener('wheel', onWheel)
+  }, [gl])
+  return null
+}
 
 function ShadowThrottle() {
   const gl = useThree((s) => s.gl)
@@ -79,12 +110,22 @@ export function Scene({ onReady }: { onReady: () => void }) {
       onPointerDown={(e) => (drag.current = { x: e.clientX, y: e.clientY })}
       onPointerMove={(e) => {
         const d = drag.current
-        if (!d || e.buttons === 0 || useStore.getState().view !== 'room') return
+        const dragging = !!d && e.buttons !== 0
+        if (e.pointerType === 'mouse' && !dragging && !calm.matches) {
+          const r = e.currentTarget.getBoundingClientRect()
+          hover.x = ((e.clientX - r.left) / r.width) * 2 - 1
+          hover.y = 1 - ((e.clientY - r.top) / r.height) * 2
+        }
+        if (!d || !dragging || useStore.getState().view !== 'room') return
         orbit.yaw = THREE.MathUtils.clamp(orbit.yaw - (e.clientX - d.x) * 0.005, -0.85, 0.85)
         orbit.pitch = THREE.MathUtils.clamp(orbit.pitch + (e.clientY - d.y) * 0.003, -0.25, 0.45)
         drag.current = { x: e.clientX, y: e.clientY }
       }}
       onPointerUp={() => (drag.current = null)}
+      onPointerLeave={(e) => {
+        // Only recentre when the mouse leaves the window, not when it moves onto the UI over the canvas.
+        if (e.relatedTarget === null) hover.x = hover.y = 0
+      }}
       style={{ touchAction: 'none' }}
     >
       <PerformanceMonitor
@@ -99,6 +140,7 @@ export function Scene({ onReady }: { onReady: () => void }) {
         <Ready onReady={onReady} />
       </Suspense>
       <CameraRig />
+      <WheelOrbit />
       <ShadowThrottle />
       {import.meta.env.DEV && <DevProbe />}
     </Canvas>
