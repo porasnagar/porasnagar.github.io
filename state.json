@@ -39,6 +39,7 @@
   "persona-ai": 2,
   "djq-str": 3,
   "triage-gateway": 1,
-  "scraper-cluster": 1
+  "scraper-cluster": 1,
+  "sci-scraper": 1
  }
 }
