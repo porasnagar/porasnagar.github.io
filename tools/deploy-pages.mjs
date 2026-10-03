@@ -5,12 +5,14 @@ import { execFileSync } from 'node:child_process'
 import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 
 const REPO = 'https://github.com/porasnagar/porasnagar.github.io.git'
 const KEEP = new Set(['.git', 'content', 'CNAME'])
 const dry = process.argv.includes('--dry')
-const root = path.resolve(path.dirname(new URL(import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1')), '..')
-const run = (cmd, args, cwd = root) => execFileSync(cmd, args, { cwd, stdio: ['ignore', 'pipe', 'inherit'], shell: process.platform === 'win32' }).toString().trim()
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
+const run = (cmd, args, cwd = root) =>
+  execFileSync(cmd, args, { cwd, stdio: ['ignore', 'pipe', 'inherit'], shell: cmd === 'npm' && process.platform === 'win32' }).toString().trim()
 
 run('npm', ['run', 'build'])
 const dist = path.join(root, 'dist')
