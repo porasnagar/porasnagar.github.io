@@ -1,0 +1,11 @@
+{
+  "name": "listening-room-realtime",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": { "start": "node index.mjs" },
+  "dependencies": {
+    "sirv": "^3.0.2",
+    "ws": "^8.22.0"
+  }
+}

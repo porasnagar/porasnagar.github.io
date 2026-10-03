@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: poras-listening-room
+    runtime: node
+    plan: free
+    rootDir: server
+    buildCommand: npm install --omit=dev
+    startCommand: node index.mjs
+    healthCheckPath: /healthz
+    envVars:
+      - key: ALLOWED_ORIGINS
+        value: https://porasnagar.github.io
+      - key: GITHUB_REPO
+        value: porasnagar/porasnagar.github.io
+      - key: GITHUB_BRANCH
+        value: realtime-state
+      - key: GITHUB_TOKEN
+        sync: false

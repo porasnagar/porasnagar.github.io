@@ -1,0 +1,8 @@
+{
+  "realtimeUrl": "wss://poras-listening-room.onrender.com/rt",
+  "location": {
+    "lat": 28.5355,
+    "lon": 77.391,
+    "timeZone": "Asia/Kolkata"
+  }
+}
