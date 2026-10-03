@@ -33,11 +33,11 @@
  ],
  "plays": {
   "stream-f1": 1,
-  "lumavoice": 2,
+  "lumavoice": 3,
   "hermes": 1,
   "learnhub": 2,
   "persona-ai": 2,
-  "djq-str": 2,
+  "djq-str": 3,
   "triage-gateway": 1,
   "scraper-cluster": 1
  }
