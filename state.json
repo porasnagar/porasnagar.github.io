@@ -48,10 +48,10 @@
   "lumavoice": 6,
   "hermes": 2,
   "learnhub": 2,
-  "persona-ai": 3,
+  "persona-ai": 4,
   "djq-str": 4,
   "triage-gateway": 1,
-  "scraper-cluster": 2,
+  "scraper-cluster": 3,
   "sci-scraper": 2
  }
 }
