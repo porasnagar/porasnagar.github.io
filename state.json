@@ -45,11 +45,11 @@
  ],
  "plays": {
   "stream-f1": 6,
-  "lumavoice": 6,
+  "lumavoice": 7,
   "hermes": 3,
   "learnhub": 2,
   "persona-ai": 6,
-  "djq-str": 5,
+  "djq-str": 6,
   "triage-gateway": 1,
   "scraper-cluster": 3,
   "sci-scraper": 2
